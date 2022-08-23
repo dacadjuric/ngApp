@@ -1,0 +1,40 @@
+<p>shopping-cart-edit works!</p>
+
+<div class="row">
+    <form (ngSubmit)="onAddToCart(f)" #f="ngForm">
+        <label for="name">Name</label>
+        <input type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            required
+            ngModel>
+        <hr>
+        <label for="amount">Amount</label>
+        <input type="number" 
+            id="amount"
+            class="form-control"
+            name="amount"
+            pattern="^[1-9]+[0-9]*$"
+            required
+            ngModel>
+        <hr>
+        <label for="description">Description:</label>
+        <br>
+        <textarea rows="2" cols="20" class="form-control" name="description"></textarea>
+        <hr>
+        <label for="description">Image:</label><br>
+        <textarea rows="2" cols="20" name="image"
+        class="form-control"
+        >Ovde dodati sliku</textarea>
+        <hr>
+        <div class="row">
+            <div class="col-md-7">
+                <button class="btn btn-success" type="submit" [disabled]="!f.valid">{{ editingMode ? 'Update' : 'Add'}}</button>
+                <button class="btn btn-danger" type="button" 
+                *ngIf="editingMode" (click)="onDelete()">Delete</button>
+                <button class="btn btn-primary" type="button" (click)="onClear()">Clear</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,43 +1,33 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { exhaustMap, map, take, tap } from 'rxjs/operators';
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { exhaustMap, map, take, tap } from "rxjs";
+import { AuthService } from "../auth/auth.service";
+import { Sneakers } from "../sneakers/sneakers.model";
+import { SneakersService } from "../sneakers/sneakers.service";
 
-import { Recipe } from '../recipes/recipe.model';
-import { RecipeService } from '../recipes/recipe.service';
-import { AuthService } from '../auth/auth.service';
-
-@Injectable({ providedIn: 'root' })
-
+@Injectable()
 export class DataStorageService {
 
-  constructor(private http: HttpClient, private recipeService: RecipeService, private authService: AuthService) {}
+   constructor(private http: HttpClient, private sneakersService: SneakersService, private authService: AuthService){}
 
-  storeRecipes() {
-    const recipes = this.recipeService.getRecipes();
-    this.http
-      .put(
-        'https://pizzaplace-8f22c-default-rtdb.europe-west1.firebasedatabase.app/recipes.json',
-        recipes
-      )
-      .subscribe(response => {
-        console.log(response);
-      });
-  }
+    storingSneakers(){
+        const sneakers = this.sneakersService.getSneakers();
+        this.http.put('https://angular22sneakersapp-default-rtdb.europe-west1.firebasedatabase.app/sneakers.json',
+        sneakers).subscribe(res => {
+            console.log(res);
+        });
+    }
 
-  fetchRecipes() {
-      return this.http.get<Recipe[]>(
-        'https://pizzaplace-8f22c-default-rtdb.europe-west1.firebasedatabase.app/recipes.json'
-      ).pipe(
-        map(recipes => {
-          return recipes.map(recipe => {
-            return {
-              ...recipe,
-              ingredients: recipe.ingredients ? recipe.ingredients : []
-            };
-          });
-        }),
-        tap(recipes => {
-          this.recipeService.setRecipes(recipes);
-    }));
-  }
+   fetchSneakers(){
+        return this.authService.user.pipe(take(1), exhaustMap(user => {
+            return this.http.get<Sneakers[]>('https://angular22sneakersapp-default-rtdb.europe-west1.firebasedatabase.app/sneakers.json')
+        }))
+        .pipe(map(s => {
+                return s.map(res => {
+                    return {...res}
+                });
+            })
+        )
+        
+    }
 }

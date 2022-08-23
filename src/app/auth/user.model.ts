@@ -1,5 +1,4 @@
-
-export class User{
+export class UserModel {
     constructor(public emailL: string, public id: string, private _token: string, private _tokenExpirationDate: Date){}
 
     //getter

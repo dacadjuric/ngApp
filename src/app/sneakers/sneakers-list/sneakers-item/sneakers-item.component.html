@@ -1,0 +1,14 @@
+<a style="cursor: pointer;"
+[routerLink]="[index]"
+routerLinkActive="active">
+  <div class="col-xs-12">
+      <img
+        [src]="sneakers.imagePath"
+        alt="{{ sneakers.name}}"
+        class="img-responsive"
+        style="max-height: 200px;">
+      <h1>{{ sneakers.name | uppercase }}</h1>
+
+    <p>{{ sneakers.description }}</p> 
+  </div>
+</a>

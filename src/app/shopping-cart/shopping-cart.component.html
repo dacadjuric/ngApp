@@ -1,0 +1,23 @@
+<!-- <p>shopping-cart works!</p>
+<app-shopping-cart-edit></app-shopping-cart-edit> -->
+
+<hr>
+
+<ul>
+    <li *ngFor="let s of sneakers">
+        <a style="cursor: pointer;">
+        {{ s.name }} --- {{ s.description}}</a>
+        <br>
+    <img
+        [src]="s.imagePath"
+        alt="{{ s.name }}"
+        class="img-responsive"
+        style="max-height: 200px;">
+        <br>
+        <button type="submit" (click)="onAddToCart()">Add</button>
+<hr>
+</li>
+</ul>
+
+
+

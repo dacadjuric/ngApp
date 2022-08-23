@@ -1,56 +1,88 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { ErrorBoxComponent } from '../shared/error-box/error-box.component';
+import { HelperDirective } from '../shared/helper/helper.directive';
 import { AuthResponseData, AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
-  templateUrl: './auth.component.html'
+  templateUrl: './auth.component.html',
 })
-export class AuthComponent {
-  isLoginMode = true;
+export class AuthComponent implements OnDestroy{
+  isLogin = true;
   isLoading = false;
-  error:string = null;
 
-  constructor(private authService: AuthService, private router: Router){}
+  error: string = null;
 
-  onSwitchMode(){
-    this.isLoginMode = !this.isLoginMode;
+//   private closeSubscription : Subscription;
+
+  @ViewChild(HelperDirective, {static: false}) errorHost : HelperDirective;
+
+  constructor(private authService: AuthService, private router: Router, private viewContainerRef: ViewContainerRef) {}
+
+  onSwitchMode() {
+    this.isLogin = !this.isLogin;
   }
 
-  onSubmit(form: NgForm){
-    console.log(form.value);
-
-    if(!form.valid){
+  onSubmit(form: NgForm) {
+    if (!form.valid) {
       return;
     }
-
     const email = form.value.email;
     const password = form.value.password;
 
-    let authObs: Observable<AuthResponseData>;
+    let authObservable: Observable<AuthResponseData>;
 
     this.isLoading = true;
+    if (this.isLogin) {
+      authObservable = this.authService.login(email, password);
+    } else {
+      authObservable = this.authService.signup(email, password);
 
-    if(this.isLoginMode){
-      authObs = this.authService.login(email,password);
-    }else{
-      authObs = this.authService.signup(email, password);
-    }
-
-    authObs.subscribe(
-      resData => {
-        console.log(resData);
-        this.isLoading = false;
-        this.router.navigate(['/recipes']);
-      },
-      errorMessage => {
-        console.log(errorMessage);
-        this.error = errorMessage;
-        this.isLoading = false;
+      authObservable.subscribe({
+        next: (v) => {
+          this.isLoading = false;
+          this.router.navigate(['/sneakers']);
+          console.log(v);
+        },
+        error: (e) => {
+          this.isLoading = false;
+          console.log('errmsg ' + e.errorMessage);
+          this.error = e;
+            // this.showErrBox(e.errorMessage);
+          console.log(e);
+        },
       });
-
+    }
     form.reset();
   }
+
+  ngOnDestroy(){
+//       if(this.closeSubscription){
+//         this.closeSubscription.unsubscribe();
+//       }
+  }
+
+  onError() {
+    this.error = null;
+  }
+
+    // private showErrBox(errMsg: string){
+    //     const errorComponent = this.viewContainerRef.createComponent(ErrorBoxComponent);
+
+    //     const hostViewContainerRef = this.errorHost.viewContRef;
+    //     hostViewContainerRef.clear();
+
+    //     //ovde treba da se prosledi errorComponent umesto ErrorBoxComponent
+    //     const hostComponent = hostViewContainerRef.createComponent(ErrorBoxComponent);
+
+    //     hostComponent.instance.errorMsg = errMsg;
+
+    //     this.closeSubscription = hostComponent.instance.close.subscribe(() => {
+    //         this.closeSubscription.unsubscribe();
+    //         hostViewContainerRef.clear();
+    //     });
+    // }
 }

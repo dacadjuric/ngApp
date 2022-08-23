@@ -1,0 +1,11 @@
+<div class="row">
+    <app-shopping-cart-edit></app-shopping-cart-edit>
+    <hr>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a *ngFor="let s of sneakers; let i = index" (click)="onEditSneakers(i)">
+                {{s.name}} === {{ s.description }} === {{ s.amount}} <br>
+            </a>
+        </li>
+    </ul>
+</div>

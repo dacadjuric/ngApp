@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-success" (click)="onNewSneakers()">New sneakers</button>
+  </div>
+</div>
+<div class="row">
+    <app-sneakers-item 
+      *ngFor="let s of sneakers; let i = index"
+      [sneakers]="s"
+      [index]="i"></app-sneakers-item>
+  </div>
+ 
+  

@@ -1,42 +1,41 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
-
-import { DataStorageService } from '../shared/data-storage.service';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subscription } from "rxjs";
+import { AuthService } from "../auth/auth.service";
+// import { AuthService } from "../auth/auth.service";
+import { DataStorageService } from "../shared/data-storage.service";
+import { SneakersService } from "../sneakers/sneakers.service";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html'
+    selector: 'app-header',
+    templateUrl: './header.component.html'
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy{
 
-  isAuthenticated = false;
-  private userSub: Subscription;
+    private userSubscription!: Subscription;
+    isAuthenticated = false;
 
-  constructor(private dataStorageService: DataStorageService, private authService: AuthService) {}
-  
-  ngOnInit() {
-    this.userSub = this.authService.user.subscribe(user => {
-      this.isAuthenticated = !!user;
-      console.log(!user);
-      console.log(!!user);
+    constructor( private data: DataStorageService, private authService: AuthService){}
 
-    });
-  }
+    onSaveSneakers(){
+        this.data.storingSneakers();
+    }
 
-  onLogout(){
-    this.authService.logout();
-  }
+    onFetchData(){
+        this.data.fetchSneakers().subscribe();
+    }
+    
+    ngOnInit(){
+        this.userSubscription = this.authService.user.subscribe(user => {
+            this.isAuthenticated = !!user;
+        });
+       
+    }
 
-  onSaveData() {
-    this.dataStorageService.storeRecipes();
-  }
+    onLogout(){
+        this.authService.logout();
+    }
 
-  onFetchData() {
-    this.dataStorageService.fetchRecipes().subscribe();
-  }
-
-  ngOnDestroy(){
-    this.userSub.unsubscribe();
-  }
+    ngOnDestroy() {
+        this.userSubscription.unsubscribe();
+    }
 }
