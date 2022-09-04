@@ -5,7 +5,7 @@ import { AuthService } from "../auth/auth.service";
 import { Sneakers } from "../sneakers/sneakers.model";
 import { SneakersService } from "../sneakers/sneakers.service";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DataStorageService {
 
    constructor(private http: HttpClient, private sneakersService: SneakersService, private authService: AuthService){}
@@ -20,14 +20,15 @@ export class DataStorageService {
 
    fetchSneakers(){
         return this.authService.user.pipe(take(1), exhaustMap(user => {
-            return this.http.get<Sneakers[]>('https://angular22sneakersapp-default-rtdb.europe-west1.firebasedatabase.app/sneakers.json')
-        }))
+            return this.http.get<Sneakers[]>('https://angular22sneakersapp-default-rtdb.europe-west1.firebasedatabase.app/sneakers.json');
+        }), )
         .pipe(map(s => {
-                return s.map(res => {
+            return !s ? null : s.map(res => {
                     return {...res}
                 });
             })
         )
+        
         
     }
 }

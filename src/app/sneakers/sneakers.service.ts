@@ -14,8 +14,8 @@ export class SneakersService {
     sneakersChanged = new Subject<Sneakers[]>();
 
     private sneakers: Sneakers[] = [
-        // new Sneakers('Test patike 1', 'Ovo su patike 1', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 3),
-        // new Sneakers('Test patike 2', 'Ovo su patike 2', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 1)
+        new Sneakers('Test patike 1', 'Ovo su patike 1', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 3),
+        new Sneakers('Test patike 2', 'Ovo su patike 2', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 1)
       ];
 
     constructor(private http: HttpClient, private sclService: ShoppingCartListService){}

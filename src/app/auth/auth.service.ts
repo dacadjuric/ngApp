@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { UserModel } from './user.model';
+import { environment } from 'src/environments/environment';
 
 export interface AuthResponseData {
   kind: string;
@@ -19,6 +20,7 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
+
   user = new BehaviorSubject<UserModel>(null);
 
   private expToken: any;
@@ -28,7 +30,7 @@ export class AuthService {
   signup(email: string, password: string) {
     return this.httpClient
       .post<AuthResponseData>(
-        'https:identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB-FnaItYtW4XTSxS9tH5xwPQeNbyTQ-hE',
+        'https:identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseKey,
         {
           email: email,
           password: password,
@@ -37,11 +39,11 @@ export class AuthService {
       )
       .pipe(
         catchError(this.errorHandling),
-        tap((data) => {
+        tap(data => {
           this.authHandling(
             data.email,
-            data.idToken,
             data.localId,
+            data.idToken,
             +data.expiresIn
           );
         })
@@ -51,14 +53,22 @@ export class AuthService {
   login(email: string, password: string) {
     return this.httpClient
       .post<AuthResponseData>(
-        'https:identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyB-FnaItYtW4XTSxS9tH5xwPQeNbyTQ-hE',
+        'https:identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseKey,
         {
           email: email,
           password: password,
           returnSecureToken: true,
         }
       )
-      .pipe(catchError(this.errorHandling));
+      .pipe(catchError(this.errorHandling),
+      tap(data => {
+        this.authHandling(
+          data.email,
+          data.localId,
+          data.idToken,
+          +data.expiresIn
+        )
+      }));
   }
 
   private authHandling(
@@ -77,7 +87,7 @@ export class AuthService {
   }
 
   private errorHandling(errRes: HttpErrorResponse) {
-    let errorMessage = 'An unknown error occured';
+    let errorMessage = 'Email or password is not valid.';
 
     if (!errRes.error || !errRes.error.error) {
       return throwError(() => errorMessage);
@@ -85,14 +95,14 @@ export class AuthService {
 
     switch (errRes.error.error.message) {
       case 'EMAIL_EXISTS':
-        errorMessage = 'This email already exists';
+        errorMessage = 'This email already exists.';
         break;
       case 'EMAIL_NOT_FOUND':
         errorMessage =
-          'The password is invalid or the user does not have a password.';
+          'The password is invalid.';
         break;
       case 'INVALID_PASSWORD':
-        errorMessage = 'This password is not correct';
+        errorMessage = 'This password is not correct.';
         break;
     }
 

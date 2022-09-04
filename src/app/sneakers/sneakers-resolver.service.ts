@@ -7,7 +7,7 @@ import { SneakersService } from "./sneakers.service";
 
 @Injectable({
     providedIn: 'root'
-}) //ovo premestiti u app.module
+})
 export class SneakersresolverService implements Resolve<Sneakers[]>{
 
     constructor(private dss: DataStorageService, private sneakersSerivce: SneakersService){}

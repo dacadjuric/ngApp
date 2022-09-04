@@ -1,8 +1,7 @@
-import { Component, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { ErrorBoxComponent } from '../shared/error-box/error-box.component';
+import { Observable } from 'rxjs';
 import { HelperDirective } from '../shared/helper/helper.directive';
 import { AuthResponseData, AuthService } from './auth.service';
 
@@ -16,11 +15,9 @@ export class AuthComponent implements OnDestroy{
 
   error: string = null;
 
-//   private closeSubscription : Subscription;
-
   @ViewChild(HelperDirective, {static: false}) errorHost : HelperDirective;
 
-  constructor(private authService: AuthService, private router: Router, private viewContainerRef: ViewContainerRef) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSwitchMode() {
     this.isLogin = !this.isLogin;
@@ -30,6 +27,7 @@ export class AuthComponent implements OnDestroy{
     if (!form.valid) {
       return;
     }
+    
     const email = form.value.email;
     const password = form.value.password;
 
@@ -40,49 +38,30 @@ export class AuthComponent implements OnDestroy{
       authObservable = this.authService.login(email, password);
     } else {
       authObservable = this.authService.signup(email, password);
-
-      authObservable.subscribe({
-        next: (v) => {
-          this.isLoading = false;
-          this.router.navigate(['/sneakers']);
-          console.log(v);
-        },
-        error: (e) => {
-          this.isLoading = false;
-          console.log('errmsg ' + e.errorMessage);
-          this.error = e;
-            // this.showErrBox(e.errorMessage);
-          console.log(e);
-        },
-      });
     }
+
+    authObservable.subscribe({
+      next: (v) => {
+        this.isLoading = false;
+        this.router.navigate(['/sneakers']);
+        console.log(v);
+      },
+      error: (e) => {
+        this.isLoading = false;
+        console.log('errmsg ' + e.errorMessage);
+        this.error = e;
+        console.log(e);
+      },
+    });
+    
     form.reset();
   }
 
   ngOnDestroy(){
-//       if(this.closeSubscription){
-//         this.closeSubscription.unsubscribe();
-//       }
+    
   }
 
   onError() {
     this.error = null;
   }
-
-    // private showErrBox(errMsg: string){
-    //     const errorComponent = this.viewContainerRef.createComponent(ErrorBoxComponent);
-
-    //     const hostViewContainerRef = this.errorHost.viewContRef;
-    //     hostViewContainerRef.clear();
-
-    //     //ovde treba da se prosledi errorComponent umesto ErrorBoxComponent
-    //     const hostComponent = hostViewContainerRef.createComponent(ErrorBoxComponent);
-
-    //     hostComponent.instance.errorMsg = errMsg;
-
-    //     this.closeSubscription = hostComponent.instance.close.subscribe(() => {
-    //         this.closeSubscription.unsubscribe();
-    //         hostViewContainerRef.clear();
-    //     });
-    // }
 }

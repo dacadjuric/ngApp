@@ -7,11 +7,13 @@ import { SneakersService } from "../sneakers/sneakers.service";
 
 @Component({
     selector: 'app-header',
-    templateUrl: './header.component.html'
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss']
+
 })
 export class HeaderComponent implements OnInit, OnDestroy{
 
-    private userSubscription!: Subscription;
+    private userSubscription: Subscription;
     isAuthenticated = false;
 
     constructor( private data: DataStorageService, private authService: AuthService){}
@@ -21,14 +23,13 @@ export class HeaderComponent implements OnInit, OnDestroy{
     }
 
     onFetchData(){
-        this.data.fetchSneakers().subscribe();
+        this.data.fetchSneakers();
     }
     
     ngOnInit(){
         this.userSubscription = this.authService.user.subscribe(user => {
             this.isAuthenticated = !!user;
         });
-       
     }
 
     onLogout(){

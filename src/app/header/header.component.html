@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
@@ -6,7 +6,7 @@
                     <a routerLink="/sneakers" class="nav-link">sneakers</a>
                 </li>
                 <li routerLinkActive="active" class="nav-item"  *ngIf="!isAuthenticated">
-                    <a routerLink="/authorization" class="nav-link">login </a>
+                    <a routerLink="/auth" class="nav-link">login </a>
                 </li>
                 <li routerLinkActive="active" class="nav-item">
                     <a routerLink="/contact" class="nav-link">contact </a>
@@ -15,16 +15,19 @@
                     <a routerLink="/collection" class="nav-link">collection </a>
                 </li>
                 <li *ngIf="isAuthenticated" class="nav-item">
-                    <a style="cursor: pointer;" class="nav-link" (click)="onLogout()"> Logout </a>
+                    <a class="nav-link" (click)="onLogout()"> Logout </a>
                 </li>
                 <li class="nav-item">
-                    <a routerLink="/shopping" style="cursor: pointer;" class="nav-link"> Shopping cart </a>
+                    <a routerLink="/shopping" class="nav-link"> Shopping cart </a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/favourites" class="nav-link"> Favourites <i class="fa-regular fa-heart"></i></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a style="cursor: pointer;" class="nav-link dropdown-toggle"  appDropdown data-bs-toggle="dropdown" role="button"> Manage <span class="caret"></span></a>
+                    <a class="nav-link dropdown-toggle"  appDropdown data-bs-toggle="dropdown" role="button"> Manage <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" style="cursor: pointer;" (click)="onSaveSneakers()">Save Data</a></li>
-                        <li><a class="dropdown-item" style="cursor: pointer;" (click)="onFetchData()">Fetch Data</a></li>
+                        <li><a class="dropdown-item" (click)="onSaveSneakers()">Save Data</a></li>
+                        <li><a class="dropdown-item" (click)="onFetchData()">Fetch Data</a></li>
                     </ul>   
                 </li>
             </ul>

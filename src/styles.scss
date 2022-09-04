@@ -1,14 +1,42 @@
-// @import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
 
-// title{
-//     color: blueviolet;
-// }
+title{
+    color: blueviolet;
+}
 
-// body{
-//     background-color: #281616;
-// }
+body{
+    background-color: #281616;
+}
 
-// $main-font: 'Michroma';
+$main-font: 'Michroma';
+
+
+.sneakers-detail{
+    margin-top: 20vh;
+}
+
+img{
+    max-height: 300px;
+}
+
+h1{
+    color: aliceblue;
+    font-family: $main-font;
+}
+
+button{
+    background-color: #977272;
+    border: #977272;
+}
+
+button:hover, button:focus{
+    background-color: #a67c7c;
+}
+
+.sd-description{
+    color: rgb(183, 191, 197);
+    font-family: $main-font;
+}
 
 // .bck-strip{
 //     height: 100vh;
@@ -36,8 +64,8 @@
 //     top: 324px;
 // }
 
-// a{
-//     color: aliceblue;
-//     font-family: $main-font;
-//     right: 24px;
-// }
+a{
+    color: aliceblue;
+    font-family: $main-font;
+    right: 24px;
+}
