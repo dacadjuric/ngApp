@@ -4,6 +4,7 @@ import { AuthService } from "../auth/auth.service";
 // import { AuthService } from "../auth/auth.service";
 import { DataStorageService } from "../shared/data-storage.service";
 import { SneakersService } from "../sneakers/sneakers.service";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
 
 @Component({
     selector: 'app-header',
@@ -15,6 +16,8 @@ export class HeaderComponent implements OnInit, OnDestroy{
 
     private userSubscription: Subscription;
     isAuthenticated = false;
+
+    faHeart = faHeart;
 
     constructor( private data: DataStorageService, private authService: AuthService){}
 

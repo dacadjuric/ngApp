@@ -1,9 +1,12 @@
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { Sneakers } from "src/app/sneakers/sneakers.model";
 
 export class ShoppingCartListService{
 
     snekersChanged = new Subject<Sneakers[]>();
+
+    cartItemList: any = [];
+    sneakersList = new BehaviorSubject<any>([]);
 
     editing = new Subject<number>();
     
@@ -13,16 +16,46 @@ export class ShoppingCartListService{
     ];
 
     getSneakers(){
-        return this.sneakers.slice();
+        // return this.sneakers.slice();
+        return this.sneakersList.asObservable();
     }
 
     getPairOfSneakers(i: number){
         return this.sneakers[i];
     }
 
-    addSneakers(sn: Sneakers){
-        this.sneakers.push(sn);
-        this.snekersChanged.next(this.sneakers.slice());
+    addSneakers(sn: any){
+        // this.sneakers.push(sn);
+        // this.snekersChanged.next(this.sneakers.slice());
+
+        this.cartItemList.push(...sn);
+        this.sneakersList.next(sn);
+    }
+
+    addToCart(prod: any){
+        this.cartItemList.push(prod);
+        this.sneakersList.next(this.cartItemList);
+        this.totalPrice();
+    }
+
+    totalPrice(){
+        let grandTotal = 0;
+        this.cartItemList.map((p: any) => {
+            grandTotal += p.totalPrice;
+        })
+    }
+
+    removeCartItem(sn: any){
+        this.cartItemList.map((a:any, index:any) => {
+            if(sn.id === a.id){
+                this.cartItemList.splice(index, 1);
+            }
+        });
+    }
+
+    removeAllCartItems(){
+        this.cartItemList = [];
+            this.sneakersList.next(this.cartItemList);
     }
 
     addArrayOfSneakers(sn : Sneakers[]){

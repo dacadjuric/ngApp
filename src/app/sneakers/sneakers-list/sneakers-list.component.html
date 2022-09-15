@@ -4,12 +4,17 @@
   </div>
 </div>
 <div class="row">
-    <div class="col-xs-12">
-      <app-sneakers-item 
-      *ngFor="let s of sneakers; let i = index"
-      [sneakers]="s"
-      [index]="i"></app-sneakers-item>
+  <div class="col-xs-12">
+    <div class="container">
+      <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide *ngFor="let s of sneakers; let i = index"
+          ><app-sneakers-item
+            class="slide"
+            [sneakers]="s"
+            [index]="i"
+          ></app-sneakers-item
+        ></ng-template>
+      </owl-carousel-o>
     </div>
   </div>
- 
-  
+</div>

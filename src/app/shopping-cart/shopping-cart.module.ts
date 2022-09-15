@@ -16,7 +16,7 @@ import { ShoppingCartComponent } from "./shopping-cart.component";
     CommonModule,
     FormsModule,
     RouterModule.forChild([
-      { path: "shopping", component: ShoppingCartListComponent },
+      { path: "shopping-cart", component: ShoppingCartListComponent },
     ]),
   ],
 })

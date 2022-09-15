@@ -4,7 +4,7 @@
     <ul class="list-group">
         <li class="list-group-item">
             <a *ngFor="let s of sneakers; let i = index" (click)="onEditSneakers(i)">
-                {{s.name}} === {{ s.description }} === {{ s.amount}} <br>
+                {{s.name}} === {{ s.description }} === {{ s.price}} <br>
             </a>
         </li>
     </ul>

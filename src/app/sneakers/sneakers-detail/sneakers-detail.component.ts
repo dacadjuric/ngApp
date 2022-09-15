@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Sneakers } from '../sneakers.model';
 import { SneakersService } from '../sneakers.service';
-import { SneakersDeatilService } from './sneakers-detail.service';
+// import { SneakersDetailService } from './sneakers-detail.service';
+import sneakersImages from '../../shared/sneakersImages.json';
 
 @Component({
   selector: 'app-sneakers-detail',
@@ -13,25 +14,28 @@ export class SneakersDetailComponent implements OnInit {
 
   sneakers: Sneakers;
 
-  sn: Sneakers[] = [];
-
+  sn: Sneakers[];
   sizes: number[] = [37,38,39,40];
 
   id: number;
 
-  constructor(private sneakersService: SneakersService, private sdService: SneakersDeatilService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private sneakersService: SneakersService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(){
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.sneakers = this.sneakersService.getPairOfSneakers(this.id);
     })
+    // console.log(sneakersImages);
 
-    this.sdService.getImages().subscribe({
-      next: img => {
-        this.sn = img
-      }
-    })
+    // this.sdService.getImages().subscribe({
+    //   next: img => {
+    //     this.sn = img
+    //   }
+    // })
+
+    
+    console.log(this.sneakers);
   }
 
   onAddToShoppingCart(){

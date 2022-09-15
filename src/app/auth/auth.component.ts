@@ -8,6 +8,7 @@ import { AuthResponseData, AuthService } from './auth.service';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
+  styleUrls: ['../../styles.scss']
 })
 export class AuthComponent implements OnDestroy{
   isLogin = true;

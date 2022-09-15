@@ -3,6 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { ShoppingCartListService } from "../shopping-cart/shopping-cart-list/shopping-cart-list.service";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+import sneakersImages from '../shared/sneakersImages.json';
+
 
 @Injectable()
 export class SneakersService {
@@ -13,10 +15,8 @@ export class SneakersService {
 
     sneakersChanged = new Subject<Sneakers[]>();
 
-    private sneakers: Sneakers[] = [
-        new Sneakers('Test patike 1', 'Ovo su patike 1', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 3),
-        new Sneakers('Test patike 2', 'Ovo su patike 2', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 1)
-      ];
+    private sneakers: Sneakers[] = sneakersImages;
+
 
     constructor(private http: HttpClient, private sclService: ShoppingCartListService){}
 
@@ -28,7 +28,6 @@ export class SneakersService {
         return this.sneakers.slice();
     }
 
-    //ovde promeniti ime u addtofavourites
     addSnekaersToShoppingCart(sneakers: Sneakers[]){
         this.sclService.addArrayOfSneakers(sneakers);
     }
@@ -55,6 +54,7 @@ export class SneakersService {
     //overvriting sneakers sa novim sneakers
     setSneakers(s: Sneakers[]){
         this.sneakers = s;
+        console.log(s);
         this.sneakersChanged.next(this.sneakers.slice());
     }
 

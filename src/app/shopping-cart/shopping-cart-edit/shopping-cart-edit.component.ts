@@ -31,9 +31,9 @@ export class ShoppingCartEditComponent implements OnInit, OnDestroy {
         this.sclForm.setValue(
           {
             name: this.editedSneakers.name,
-            // description: this.editedSneakers.description,
+            description: this.editedSneakers.description,
             image: this.editedSneakers.imagePath,
-            amount: this.editedSneakers.amount
+            amount: this.editedSneakers.price
           }
         )
       }

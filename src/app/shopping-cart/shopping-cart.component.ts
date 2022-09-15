@@ -9,8 +9,8 @@ import { Sneakers } from '../sneakers/sneakers.model';
 export class ShoppingCartComponent implements OnInit {
 
   sneakers: Sneakers[] = [
-    new Sneakers('Patike 1', 'Patike 1 desc', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 2),
-    new Sneakers('Patike 2', 'Patike 2 desc', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 3)
+    // new Sneakers('Patike 1', 'Patike 1 desc', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 2),
+    // new Sneakers('Patike 2', 'Patike 2 desc', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/9-5-1647879684.jpg?crop=1.00xw:0.845xh;0,0.0400xh&resize=1200:*', 3)
   ];
 
   @ViewChild('nameInput', {static: false}) nameInputER: ElementRef;
@@ -28,9 +28,9 @@ export class ShoppingCartComponent implements OnInit {
     const name = this.nameInputER.nativeElement.value;
     const amount = this.amountInputER.nativeElement.value;
     const description = this.description.nativeElement.value;
-    const image = this.image.nativeElement.value;
+    const imagePath = this.image.nativeElement.value;
 
-    const newSneakers = new Sneakers(name, description, image, amount);
+    const newSneakers = new Sneakers(name, description, imagePath, amount);
 
     this.sneakersAdded.emit(newSneakers);
   }

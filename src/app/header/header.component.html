@@ -18,10 +18,11 @@
                     <a class="nav-link" (click)="onLogout()"> Logout </a>
                 </li>
                 <li class="nav-item">
-                    <a routerLink="/shopping" class="nav-link"> Shopping cart </a>
+                    <a routerLink="/shopping-cart" class="nav-link"> Shopping cart </a>
                 </li>
                 <li class="nav-item">
-                    <a routerLink="/favourites" class="nav-link"> Favourites <i class="fa-regular fa-heart"></i></a>
+                    <a routerLink="/favourites" class="nav-link"> Favourites <fa-icon [icon]="faHeart"></fa-icon>
+                    </a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle"  appDropdown data-bs-toggle="dropdown" role="button"> Manage <span class="caret"></span></a>

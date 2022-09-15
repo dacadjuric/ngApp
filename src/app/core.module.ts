@@ -6,6 +6,7 @@ import { DataStorageService } from "./shared/data-storage.service";
 import { ShoppingCartListService } from "./shopping-cart/shopping-cart-list/shopping-cart-list.service";
 import { SneakersService } from "./sneakers/sneakers.service";
 
+
 @NgModule({
     providers: [
         ShoppingCartListService,
@@ -16,6 +17,7 @@ import { SneakersService } from "./sneakers/sneakers.service";
             useClass: AuthInterceptorService,
             multi: true
         },
-        AuthGuard]
+        AuthGuard
+    ]
 })
 export class CoreModule{}

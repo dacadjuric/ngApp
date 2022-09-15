@@ -8,6 +8,18 @@ body{
     background-color: #281616;
 }
 
+.auth-form{
+    margin-top: 16vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+label{
+    color: aliceblue;
+}
+
 $main-font: 'Michroma';
 
 
@@ -29,8 +41,11 @@ button{
     border: #977272;
 }
 
-button:hover, button:focus{
+button:hover, button:focus, button:disabled, button:visited, button:active {
     background-color: #a67c7c;
+    border-color: none;
+    outline: none;
+    box-shadow: none;
 }
 
 .sd-description{
@@ -68,4 +83,8 @@ a{
     color: aliceblue;
     font-family: $main-font;
     right: 24px;
+}
+
+.sd-sizes{
+    margin-top: 5vh !important;
 }
