@@ -1,8 +1,32 @@
 <p>shopping-cart works!</p>
-<app-shopping-cart-edit></app-shopping-cart-edit>
+<!-- <app-shopping-cart-edit></app-shopping-cart-edit> -->
 
+<h1> govno radi</h1>
 <hr>
 
+<ng-container *ngIf="true">
+    <table class="table table-responsive" style="color: white;">
+        <tr>
+            <td>Sr nmbr</td>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Price</td>
+            <td>Size</td>
+            <td>Total</td>
+        </tr>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>neke patike</td>
+                <td>Opis za neke patike</td>
+                <td>678</td>
+                <td>37</td>
+                <td><button class="btn btn-danger">x</button></td>
+            </tr>
+        </tbody>
+    </table>
+</ng-container>
+ 
 <ul>
     <li *ngFor="let s of sneakers">
         <a style="cursor: pointer;">
